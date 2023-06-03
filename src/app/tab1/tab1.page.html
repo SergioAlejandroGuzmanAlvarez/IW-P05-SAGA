@@ -1,0 +1,89 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Nuevo evento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="eventoForm">
+    <ion-grid>
+      <ion-item-divider style="background-color: #fff;">
+        <ion-label style="font-weight: bold; font-size: 18px;">
+          Información básica (Nombre y número telefónico)
+        </ion-label>
+      </ion-item-divider>
+      <ion-row>
+        <ion-col size="2">
+          <ion-item>
+            <ion-icon name="person" slot="start"></ion-icon>
+            <ion-input label="Nombre" labelPlacement="floating" type="text" formControlName="cliente"></ion-input>
+          </ion-item>
+          <ng-container *ngFor="let error of mensajes_validacion.cliente">
+            <ion-item class="error-message" *ngIf="eventoForm.get('cliente')?.hasError(error.tipo) && eventoForm.get('cliente')?.touched">
+              <ion-label>{{ error.mensaje }}</ion-label>
+            </ion-item>
+          </ng-container>
+        </ion-col>
+        <ion-col size="10">
+          <ion-item>
+            <ion-icon name="call" slot="start"></ion-icon>
+            <ion-input label="Teléfono" labelPlacement="floating" type="tel" formControlName="celular"></ion-input>
+          </ion-item>
+          <ng-container *ngFor="let error of mensajes_validacion.celular">
+            <ion-item class="error-message" *ngIf="eventoForm.get('celular')?.hasError(error.tipo) && eventoForm.get('celular')?.touched">
+              <ion-label>{{ error.mensaje }}</ion-label>
+            </ion-item>
+          </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-item-divider style="background-color: #fff;">
+        <ion-label style="font-weight: bold; font-size: 18px;">
+          Descripción
+        </ion-label>
+      </ion-item-divider>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-icon name="information-circle" slot="start"></ion-icon>
+            <ion-textarea label="Descripción" labelPlacement="floating" formControlName="descripcion"></ion-textarea>
+          </ion-item>
+          <ng-container *ngFor="let error of mensajes_validacion.descripcion">
+            <ion-item class="error-message" *ngIf="eventoForm.get('descripcion')?.hasError(error.tipo) && eventoForm.get('descripcion')?.touched">
+              <ion-label>{{ error.mensaje }}</ion-label>
+            </ion-item>
+          </ng-container>
+        </ion-col>
+      </ion-row>
+      
+      <ion-item-divider style="background-color: #fff;">
+        <ion-label style="font-weight: bold; font-size: 18px;">
+          Fecha y hora del evento
+        </ion-label>
+      </ion-item-divider>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label style="font-weight: bold;">Fecha y Hora</ion-label>
+            <ion-datetime-button datetime="datetime"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime" displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD/MM/YYYY HH:mm" (ionChange)="setFechaHora($event)" [isDateEnabled]="fechaDesocupada()" locale="es-MX" #fecha></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+          <ng-container *ngFor="let error of mensajes_validacion.fecha">
+            <ion-item class="error-message" *ngIf="eventoForm.get('fecha')?.hasError(error.tipo)">
+              <ion-label>{{ error.mensaje }}</ion-label>
+            </ion-item>
+          </ng-container>
+          <ng-container *ngFor="let error of mensajes_validacion.hora">
+            <ion-item class="error-message" *ngIf="eventoForm.get('hora')?.hasError(error.tipo) && eventoForm.get('hora')?.touched">
+              <ion-label>{{ error.mensaje }}</ion-label>
+            </ion-item>
+          </ng-container>
+        </ion-col>
+      </ion-row>
+      </ion-grid>
+      </form>            
+  </ion-content>
+

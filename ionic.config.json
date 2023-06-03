@@ -1,0 +1,7 @@
+{
+  "name": "p05",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
